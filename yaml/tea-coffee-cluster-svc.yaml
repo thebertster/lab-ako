@@ -1,0 +1,33 @@
+# This example creates a cluster service for the tea and coffee applications
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coffee-svc
+  labels:
+    app: coffee
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: coffee
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tea-svc
+  labels:
+    app: tea
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: tea
+  type: ClusterIP

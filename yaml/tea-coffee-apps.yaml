@@ -1,0 +1,76 @@
+# This creates a 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffee
+spec:
+  selector:
+    matchLabels:
+      app: coffee
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: coffee
+    spec:
+      containers:
+      - name: coffee
+        image: nginxdemos/nginx-hello
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "200Mi"
+          requests:
+            cpu: "0.1"
+            memory: "100Mi"
+#        readinessProbe:
+#          httpGet:
+#            path: /coffee
+#            port: 8080
+#          initialDelaySeconds: 60
+#          periodSeconds: 5
+#          successThreshold: 3
+      imagePullSecrets:
+        - name: thebertster
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tea
+spec:
+  selector:
+    matchLabels:
+      app: tea
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: tea
+    spec:
+      containers:
+      - name: tea
+        image: nginxdemos/nginx-hello
+        ports:
+        - containerPort: 8080
+ #       readinessProbe:
+ #         tcpSocket:
+ #           port: 8080
+ #         initialDelaySeconds: 15
+ #         periodSeconds: 10
+ #       livenessProbe:
+ #         tcpSocket:
+ #           port: 8080
+ #         initialDelaySeconds: 15
+ #         periodSeconds: 10
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "200Mi"
+          requests:
+            cpu: "0.1"
+            memory: "100Mi"
+      imagePullSecrets:
+        - name: thebertster

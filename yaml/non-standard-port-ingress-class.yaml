@@ -1,0 +1,27 @@
+# This example creates an IngressClass and AviInfraSetting that would allow
+# the associated Ingresses to be exposed via non-standard TCP ports
+---
+apiVersion: ako.vmware.com/v1beta1
+kind: AviInfraSetting
+metadata:
+  name: use-non-standard-http-port
+spec:
+  network:
+    listeners:
+      - port: 8080
+        enableSSL: false
+        enableHTTP2: false
+      - port: 8443
+        enableSSL: true
+        enableHTTP2: false
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: avi-ingress-special
+spec:
+  controller: ako.vmware.com/avi-lb
+  parameters:
+    apiGroup: ako.vmware.com
+    kind: AviInfraSetting
+    name: use-non-standard-http-port

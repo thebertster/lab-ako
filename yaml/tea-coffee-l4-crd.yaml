@@ -1,0 +1,37 @@
+# This example creates a L4 Virtual Service with:
+#  - Custom L4 SSL application profile with mTLS enabled
+#  - RSA and EC certificates
+---
+apiVersion: ako.vmware.com/v1alpha2
+kind: L4Rule
+metadata:
+  name: tea-coffee-l4-rule
+spec:
+  listenerProperties:
+  - port: 443
+    protocol: TCP
+    enableSsl: true
+  sslKeyAndCertificateRefs:
+  - "Wildcard-RSA-Cert"
+  - "Wildcard-ECDSA-Cert"
+  networkProfileRef: System-TCP-Proxy
+  sslProfileRef: System-Standard
+  applicationProfileRef: L4-SSL-mTLS
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tea-svc-l4-ssl
+  labels:
+    app: tea
+  annotations:
+    ako.vmware.com/l4rule: tea-coffee-l4-rule
+spec:
+  ports:
+  - port: 443
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: tea
+  type: LoadBalancer

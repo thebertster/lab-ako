@@ -1,0 +1,25 @@
+# This example creates a basic insecure Ingress without any Avi-specific constructs
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cafe-ingress-basic
+spec:
+  rules:
+  - host: cafe-basic.vs4.rc.demo.avi.local
+    http:
+      paths:
+      - path: /tea
+        pathType: Prefix
+        backend:
+         service:
+          name: tea-svc
+          port:
+           number: 8080
+      - path: /coffee
+        pathType: Prefix
+        backend:
+         service:
+          name: coffee-svc
+          port:
+           number: 8080

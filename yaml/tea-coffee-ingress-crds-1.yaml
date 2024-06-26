@@ -1,0 +1,52 @@
+# This file defines an Ingress that uses a HostRule to assign a RSA/ECDSA certificates already created on the Controller
+# an alias FQDN through which the application can be accessed (public.rc.demo.avi.local)
+# and an HTTPRule to specify a custom Health Monitor to be attached to the Pool
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cafe-crd1
+spec:
+  rules:
+    - host: cafe-crd1.vs4.rc.demo.avi.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tea-svc
+                port:
+                  number: 8080
+---
+apiVersion: ako.vmware.com/v1beta1
+kind: HostRule
+metadata:
+  name: cafe-crd1-hostrule
+spec:
+  virtualhost:
+    fqdn: cafe-crd1.vs4.rc.demo.avi.local
+    fqdnType: Exact
+    aliases:
+      - public.rc.demo.avi.local
+    tls:
+      sslKeyCertificate:
+        # name: wildcard-cert
+        # type: secret
+        name: Wildcard-RSA-Cert
+        type: ref
+        alternateCertificate:
+          name: Wildcard-ECDSA-Cert
+          type: ref
+      sslProfile: System-Standard-PFS
+---
+apiVersion: ako.vmware.com/v1beta1
+kind: HTTPRule
+metadata:
+  name: cafe-crd1-httprule
+spec:
+  fqdn: cafe-crd1.vs4.rc.demo.avi.local
+  paths:
+    - target: /
+      healthMonitors:
+        - Custom-HTTP-Monitor

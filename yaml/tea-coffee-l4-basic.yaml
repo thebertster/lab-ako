@@ -1,0 +1,17 @@
+# This example creates a simple service type LoadBalancer (no Avi-specific constructs)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tea-svc-fqdn
+  labels:
+    app: tea
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: tea
+  type: LoadBalancer
