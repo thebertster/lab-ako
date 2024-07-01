@@ -1,0 +1,62 @@
+# This example creates two L4 Services that will share the same VIP "10.206.112.93"
+# "tea" will be exposed on port 8881, "coffee" will be exposed on port 8882
+#
+# Both services reference the same L4Rule; it is required that services sharing
+# the same VIP reference the same L4Rule to ensure that VS-level properties are
+# consistent. However, Pool-level properties can be set differently for each service
+# based on the backendProperties matching the corresponding service port
+#
+# The Pool for the service on port 8881 will have the System-Ping Health Monitor
+# The Pool for the service on port 8882 will have the TCP-Half-Open Health Monitor
+---
+apiVersion: ako.vmware.com/v1alpha2
+kind: L4Rule
+metadata:
+  name: tea-coffee-l4-rule
+spec:
+  loadBalancerIP: 10.206.112.93
+  backendProperties:
+    - port: 8881
+      protocol: TCP
+      healthMonitorRefs:
+        - System-Ping
+    - port: 8882
+      protocol: TCP
+      healthMonitorRefs:
+        - TCP-Half-Open
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tea-svc-l4
+  labels:
+    app: tea
+  annotations:
+    ako.vmware.com/enable-shared-vip: shared-vip-key-1
+    ako.vmware.com/l4rule: tea-coffee-l4-rule
+spec:
+  ports:
+    - port: 8881
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: tea
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coffee-svc-l4
+  labels:
+    app: coffee
+  annotations:
+    ako.vmware.com/enable-shared-vip: shared-vip-key-1
+    ako.vmware.com/l4rule: tea-coffee-l4-rule
+spec:
+  ports:
+    - port: 8882
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: coffee
+  type: LoadBalancer

@@ -6,25 +6,24 @@ metadata:
   name: cafe-ingress-https
 spec:
   rules:
-  - host: cafe-https.vs4.rc.demo.avi.local
-    http:
-      paths:
-      - path: /tea
-        pathType: Prefix
-        backend:
-         service:
-          name: tea-svc
-          port:
-           number: 8080
-      - path: /coffee
-        pathType: Prefix
-        backend:
-         service:
-          name: coffee-svc
-          port:
-           number: 8080
+    - host: cafe-https.vs4.rc.demo.avi.local
+      http:
+        paths:
+          - path: /tea
+            pathType: Prefix
+            backend:
+              service:
+                name: tea-svc
+                port:
+                  number: 8080
+          - path: /coffee
+            pathType: Prefix
+            backend:
+              service:
+                name: coffee-svc
+                port:
+                  number: 8080
   tls:
-  - hosts:
-    - cafe-https.vs4.rc.demo.avi.local
-    secretName: wildcard-cert
-    
+    - hosts:
+        - cafe-https.vs4.rc.demo.avi.local
+      secretName: wildcard-cert

@@ -6,20 +6,20 @@ metadata:
   name: cafe-ingress-basic
 spec:
   rules:
-  - host: cafe-basic.vs4.rc.demo.avi.local
-    http:
-      paths:
-      - path: /tea
-        pathType: Prefix
-        backend:
-         service:
-          name: tea-svc
-          port:
-           number: 8080
-      - path: /coffee
-        pathType: Prefix
-        backend:
-         service:
-          name: coffee-svc
-          port:
-           number: 8080
+    - host: cafe-basic.vs4.rc.demo.avi.local
+      http:
+        paths:
+          - path: /tea
+            pathType: Prefix
+            backend:
+              service:
+                name: tea-svc
+                port:
+                  number: 8080
+          - path: /coffee
+            pathType: Prefix
+            backend:
+              service:
+                name: coffee-svc
+                port:
+                  number: 8080

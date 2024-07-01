@@ -1,0 +1,38 @@
+# This example creates two L4 Services that will share the same VIP "10.206.112.93"
+# "tea" will be exposed on port 8881, "coffee" will be exposed on port 8882
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tea-svc-l4
+  labels:
+    app: tea
+  annotations:
+    ako.vmware.com/enable-shared-vip: shared-vip-key-1
+spec:
+  ports:
+    - port: 8881
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: tea
+  type: LoadBalancer
+  loadBalancerIP: "10.206.112.93"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coffee-svc-l4
+  labels:
+    app: coffee
+  annotations:
+    ako.vmware.com/enable-shared-vip: shared-vip-key-1
+spec:
+  ports:
+    - port: 8882
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: coffee
+  type: LoadBalancer
+  loadBalancerIP: "10.206.112.93"

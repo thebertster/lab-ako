@@ -8,10 +8,9 @@ metadata:
     app: tea
 spec:
   ports:
-  - port: 80
-    targetPort: 8080
-    protocol: TCP
-    name: http
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
   selector:
     app: tea
   type: LoadBalancer

@@ -8,23 +8,23 @@ metadata:
 spec:
   ingressClassName: avi-ingress-dedicated
   rules:
-  - host: cafe-dedicated.vs4.rc.demo.avi.local
-    http:
-      paths:
-      - path: /tea
-        pathType: Prefix
-        backend:
-         service:
-          name: tea-svc
-          port:
-           number: 8080
-      - path: /coffee
-        pathType: Prefix
-        backend:
-         service:
-          name: coffee-svc
-          port:
-           number: 8080
+    - host: cafe-dedicated.vs4.rc.demo.avi.local
+      http:
+        paths:
+          - path: /tea
+            pathType: Prefix
+            backend:
+              service:
+                name: tea-svc
+                port:
+                  number: 8080
+          - path: /coffee
+            pathType: Prefix
+            backend:
+              service:
+                name: coffee-svc
+                port:
+                  number: 8080
 ---
 apiVersion: ako.vmware.com/v1beta1
 kind: HostRule
@@ -43,4 +43,4 @@ spec:
           type: ref
       termination: edge
     tcpSettings:
-        loadBalancerIP: 10.206.112.93
+      loadBalancerIP: 10.206.112.93

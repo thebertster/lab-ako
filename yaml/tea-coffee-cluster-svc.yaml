@@ -8,10 +8,10 @@ metadata:
     app: coffee
 spec:
   ports:
-  - port: 8080
-    targetPort: 8080
-    protocol: TCP
-    name: http
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
   selector:
     app: coffee
   type: ClusterIP
@@ -24,10 +24,10 @@ metadata:
     app: tea
 spec:
   ports:
-  - port: 8080
-    targetPort: 8080
-    protocol: TCP
-    name: http
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
   selector:
     app: tea
   type: ClusterIP

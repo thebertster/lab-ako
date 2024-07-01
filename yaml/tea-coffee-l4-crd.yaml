@@ -8,12 +8,12 @@ metadata:
   name: tea-coffee-l4-rule
 spec:
   listenerProperties:
-  - port: 443
-    protocol: TCP
-    enableSsl: true
+    - port: 443
+      protocol: TCP
+      enableSsl: true
   sslKeyAndCertificateRefs:
-  - "Wildcard-RSA-Cert"
-  - "Wildcard-ECDSA-Cert"
+    - "Wildcard-RSA-Cert"
+    - "Wildcard-ECDSA-Cert"
   networkProfileRef: System-TCP-Proxy
   sslProfileRef: System-Standard
   applicationProfileRef: L4-SSL-mTLS
@@ -28,10 +28,9 @@ metadata:
     ako.vmware.com/l4rule: tea-coffee-l4-rule
 spec:
   ports:
-  - port: 443
-    targetPort: 8080
-    protocol: TCP
-    name: http
+    - port: 443
+      targetPort: 8080
+      protocol: TCP
   selector:
     app: tea
   type: LoadBalancer
