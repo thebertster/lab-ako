@@ -26,4 +26,4 @@ spec:
   tls:
     - hosts:
         - cafe-https.vs4.rc.demo.avi.local
-      secretName: wildcard-cert
+      secretName: rc-wildcard-secret

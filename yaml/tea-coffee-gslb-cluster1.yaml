@@ -36,3 +36,7 @@ spec:
                 name: coffee-svc
                 port:
                   number: 8080
+  tls:
+    - hosts:
+        - cafe-gslb.vs4.rc.demo.avi.local
+      secretName: rc-wildcard-secret

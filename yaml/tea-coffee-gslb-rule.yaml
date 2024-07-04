@@ -1,0 +1,12 @@
+---
+apiVersion: amko.vmware.com/v1alpha1
+kind: GSLBHostRule
+metadata:
+  name: cafe-gslb-hostule
+spec:
+  fqdn: cafe-gslb.amko.rc.demo.avi.local
+  trafficSplit:
+  - cluster: rc-tkg-wl-1-admin@rc-tkg-wl-1
+    priority: 10
+  - cluster: rc-tkg-wl-2-admin@rc-tkg-wl-2
+    priority: 20
